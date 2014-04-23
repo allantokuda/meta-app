@@ -1,0 +1,43 @@
+{
+  "org": {
+    "name": "string",
+    "_embeds_many": ["entity", "role", "subscription"]
+  },
+  "entity": {
+    "name": "string",
+    "_embeds_many": ["attribute", "record", "selection"],
+    "_has_many": ["relationship"]
+  },
+  "attribute": {
+    "name": "string",
+    "type": "integer"
+  },
+  "record": {
+  },
+  "user": {
+    "email": "string",
+    "password": "string",
+    "_has_many": ["user_role_assignment"]
+  },
+  "role": {
+    "name": "string",
+    "_has_many": ["user_role_assignment", "role_selection_assignment"]
+  },
+  "selection": {
+    "read filter": "string",
+    "write filter": "string",
+    "read projection": "string",
+    "write projection": "string",
+    "index projection": "string",
+    "index style": "string",
+    "detail style": "string",
+    "default order": "string",
+    "_embeds_many": ["selection"],
+    "_has_many": ["role_selection_assignment"]
+  },
+  "user_role_assignment": {
+  },
+  "role_selection_assignment": {
+    "dashboard priority": "integer"
+  }
+}
