@@ -45,3 +45,4 @@ gem 'rspec-rails', group: [:development, :test]
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 gem 'twitter-bootstrap-rails'
 gem 'angularjs-rails'
+gem 'pry'

@@ -1,5 +1,9 @@
 MetaApp::Application.routes.draw do
-  resources :entities
+  get    'api/entities'     => 'entities#index'
+  post   'api/entities'     => 'entities#create'
+  get    'api/entities/:id' => 'entities#show'
+  put    'api/entities/:id' => 'entities#update'
+  delete 'api/entities/:id' => 'entities#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

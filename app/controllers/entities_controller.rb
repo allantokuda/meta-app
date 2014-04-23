@@ -1,64 +1,36 @@
 class EntitiesController < ApplicationController
   before_action :set_entity, only: [:show, :edit, :update, :destroy]
 
-  # GET /entities
-  # GET /entities.json
   def index
     @entities = Entity.all
+    render json: @entities
   end
 
-  # GET /entities/1
-  # GET /entities/1.json
   def show
+    render json: @entity
   end
 
-  # GET /entities/new
-  def new
-    @entity = Entity.new
-  end
-
-  # GET /entities/1/edit
-  def edit
-  end
-
-  # POST /entities
-  # POST /entities.json
   def create
     @entity = Entity.new(entity_params)
 
-    respond_to do |format|
-      if @entity.save
-        format.html { redirect_to @entity, notice: 'Entity was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @entity }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @entity.errors, status: :unprocessable_entity }
-      end
+    if @entity.save
+      render json: @entity, status: :created
+    else
+      render json: @entity.errors, status: :unprocessable_entity
     end
   end
 
-  # PATCH/PUT /entities/1
-  # PATCH/PUT /entities/1.json
   def update
-    respond_to do |format|
-      if @entity.update(entity_params)
-        format.html { redirect_to @entity, notice: 'Entity was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: 'edit' }
-        format.json { render json: @entity.errors, status: :unprocessable_entity }
-      end
+    if @entity.update(entity_params)
+      head :no_content
+    else
+      render json: @entity.errors, status: :unprocessable_entity
     end
   end
 
-  # DELETE /entities/1
-  # DELETE /entities/1.json
   def destroy
     @entity.destroy
-    respond_to do |format|
-      format.html { redirect_to entities_url }
-      format.json { head :no_content }
-    end
+    head :no_content
   end
 
   private
