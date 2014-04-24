@@ -1,0 +1,47 @@
+{
+  "name": "Meta App",
+  "roles": ["admin", "moderator", "user"],
+  "entities": {
+    "app": {
+      "name": "string",
+      "_embeds_many": ["table", "role", "subscription"]
+    },
+    "table": {
+      "name": "string",
+      "_embeds_many": ["attribute", "record", "view"],
+      "_has_many": ["relationship"]
+    },
+    "attribute": {
+      "name": "string",
+      "type": "integer"
+    },
+    "record": {
+    },
+    "user": {
+      "email": "string",
+      "password": "string",
+      "_has_many": ["permission"]
+    },
+    "role": {
+      "name": "string",
+      "_has_many": ["permission", "assignment"]
+    },
+    "view": {
+      "read filter": "string",
+      "write filter": "string",
+      "read projection": "string",
+      "write projection": "string",
+      "index projection": "string",
+      "index style": "string",
+      "detail style": "string",
+      "default order": "string",
+      "_embeds_many": ["view"],
+      "_has_many": ["assignment"]
+    },
+    "permission": {
+    },
+    "assignment": {
+      "dashboard priority": "integer"
+    }
+  }
+}

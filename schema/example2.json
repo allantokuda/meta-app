@@ -1,0 +1,33 @@
+{
+  "name": "First Pro Services Inc",
+  "roles": ["manager", "technician"],
+  "tables": {
+    "work_order": {
+      "order_id": "integer",
+      "due_date": "date",
+      "received_date": "date",
+      "status": {
+        "_state_machine": {
+          "new": ["pending", "rejected"],
+          "pending": ["completed", "cancelled"]
+        }
+      },
+      "description": "text",
+      "_embeds_many": ["address"]
+    },
+    "address": {
+      "name": "string",
+      "line1": "string",
+      "line2": "string",
+      "city": "string",
+      "state": "string",
+      "country": "string",
+      "postal": "string"
+    },
+    "contact": {
+      "name": "string",
+      "phone": "string",
+      "email": "string"
+    }
+  }
+}
