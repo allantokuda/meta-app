@@ -1,0 +1,64 @@
+GET    apps      (sysadmin only index resource)
+POST   apps
+
+GET    apps/:id
+PUT    apps/:id
+DELETE apps/:id
+GET    apps/:id/roles
+POST   apps/:id/roles
+GET    apps/:id/tables
+POST   apps/:id/tables
+GET    apps/:id/relationships
+POST   apps/:id/relationships
+
+GET    users     (sysadmin only index resource)
+POST   users
+
+GET    users/:id
+PUT    users/:id
+DELETE users/:id
+GET    users/:id/assignments
+POST   users/:id/assignments
+
+GET    assignments/:id
+PUT    assignments/:id
+DELETE assignments/:id
+
+GET    roles/:id
+PUT    roles/:id
+DELETE roles/:id
+GET    roles/:id/permissions
+POST   roles/:id/permissions
+
+GET    permissions/:id
+PUT    permissions/:id
+DELETE permissions/:id
+
+GET    tables/:id
+PUT    tables/:id
+DELETE tables/:id
+GET    tables/:id/columns
+POST   tables/:id/columns
+GET    tables/:id/views
+POST   tables/:id/views
+GET    tables/:id/records
+POST   tables/:id/records
+
+GET    columns/:id
+PUT    columns/:id
+DELETE columns/:id
+
+GET    views/:id
+PUT    views/:id
+DELETE views/:id
+GET    views/:id/views
+POST   views/:id/views
+
+GET    relationships/:id
+PUT    relationships/:id
+DELETE relationships/:id
+
+GET    records/:id
+PUT    records/:id
+DELETE records/:id
+
