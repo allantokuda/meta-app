@@ -39,10 +39,14 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
-# Use debugger
-# gem 'debugger', group: [:development, :test]
-gem 'rspec-rails', group: [:development, :test]
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 gem 'twitter-bootstrap-rails'
 gem 'angularjs-rails'
-gem 'pry'
+gem 'database_cleaner'
+
+group :development do
+  gem 'pry'
+  gem 'rspec-rails'
+  gem 'zeus'
+  gem 'guard'
+end
