@@ -49,4 +49,5 @@ group :development do
   gem 'rspec-rails'
   gem 'zeus'
   gem 'guard'
+  gem 'guard-rspec'
 end
