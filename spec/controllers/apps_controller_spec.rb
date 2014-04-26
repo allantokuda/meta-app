@@ -47,35 +47,19 @@ describe Api::V1::AppsController do
     end
   end
 
-  #describe "PUT update" do
-  #  describe "with valid params" do
-  #    it "updates the requested object" do
-  #      object = model.create! valid_attributes
-  #      # Assuming there are no other objects in the database, this
-  #      # specifies that the model created on the previous line
-  #      # receives the :update_attributes message with whatever params are
-  #      # submitted in the request.
-  #      model.any_instance.should_receive(:update).with({ "name" => "MyString" })
-  #      put :update, {:id => object.to_param, :object => { "name" => "MyString" }}, valid_session
-  #    end
-
-  #    it "assigns the requested object as @object" do
-  #      object = model.create! valid_attributes
-  #      put :update, {:id => object.to_param, :object => valid_attributes}, valid_session
-  #      assigns(:object).should eq(object)
-  #    end
-  #  end
-
-  #  describe "with invalid params" do
-  #    it "assigns the object as @object" do
-  #      object = model.create! valid_attributes
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      model.any_instance.stub(:save).and_return(false)
-  #      put :update, {:id => object.to_param, :object => { "name" => "invalid value" }}, valid_session
-  #      assigns(:object).should eq(object)
-  #    end
-  #  end
-  #end
+  describe "PUT update" do
+    describe "with valid params" do
+      it "updates the requested object" do
+        object = model.create! valid_attributes
+        # Assuming there are no other objects in the database, this
+        # specifies that the model created on the previous line
+        # receives the :update_attributes message with whatever params are
+        # submitted in the request.
+        model.any_instance.should_receive(:update).with({ "name" => "MyString" })
+        put :update, {:id => object.to_param, :app => { "name" => "MyString" }}, valid_session
+      end
+    end
+  end
 
   #describe "DELETE destroy" do
   #  it "destroys the requested object" do

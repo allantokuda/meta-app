@@ -53,13 +53,13 @@ class ObjectsController < ApplicationController
   #  end
   #end
 
-  #def update
-  #  if @object.update(object_params)
-  #    head :no_content
-  #  else
-  #    render json: @object.errors, status: :unprocessable_entity
-  #  end
-  #end
+  def update
+    if @object.update(object_params)
+      head :no_content
+    else
+      render json: @object.errors, status: :unprocessable_entity
+    end
+  end
 
   #def destroy
   #  @object.destroy
