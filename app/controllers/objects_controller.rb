@@ -34,11 +34,11 @@ class ObjectsController < ApplicationController
   def create
     @object = model.new(object_params)
 
-    #if @object.save
+    if @object.save
       render json: @object, status: :created
-    #else
-    #  render json: @object.errors, status: :unprocessable_entity
-    #end
+    else
+      render json: @object.errors, status: :unprocessable_entity
+    end
   end
 
   #def create
@@ -77,10 +77,13 @@ class ObjectsController < ApplicationController
   #  @sibling_objects = @parent_object.public_send(model_symbol_plural)
   #end
 
-  #def object_params
-  #  params.require(model_symbol).permit(*permitted_params)
-  #end
+  def object_params
+    params.require(model_symbol).permit(*permitted_params)
+  end
 
+  def permitted_params
+    [:name]
+  end
   #def permitted_params
   #  model.try(:fields).keys.map(&:to_sym).reject{|k| k == :_id}
   #end

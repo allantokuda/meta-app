@@ -8,8 +8,8 @@ describe Api::V1::AppsController do
 
   # Apps is a top-level object (it has no parents)
   # so all of its records should be retrieved
-  describe "#index" do
-    it "assigns all objects as @objects" do
+  describe "GET index" do
+    it "responds with all objects" do
       object = model.create! valid_attributes
       get :index, {}, valid_session
       response.body.should match 'My Example'
@@ -17,37 +17,35 @@ describe Api::V1::AppsController do
   end
 
   describe "GET show" do
-    it "assigns the requested object as @object" do
+    it "responds with the requested object" do
       object = model.create! valid_attributes
       get :show, {:id => object.to_param}, valid_session
       response.body.should match 'My Example'
     end
   end
 
-  #describe "POST create" do
-  #  describe "with valid params" do
-  #    it "creates a new model" do
-  #      expect {
-  #        post :create, { :app => valid_attributes}, valid_session
-  #      }.to change(model, :count).by(1)
-  #    end
+  describe "POST create" do
+    describe "with valid params" do
+      it "creates a new object" do
+        expect {
+          post :create, {:app => valid_attributes}, valid_session
+        }.to change(model, :count).by(1)
+      end
 
-  #    it "assigns a newly created object as @object" do
-  #      post :create, {:object => valid_attributes}, valid_session
-  #      assigns(:object).should be_a(model)
-  #      assigns(:object).should be_persisted
-  #    end
-  #  end
+      it "responds with the newly created object" do
+        post :create, {:app => valid_attributes}, valid_session
+        response.body.should match 'My Example'
+      end
+    end
 
-  #  describe "with invalid params" do
-  #    it "assigns a newly created but unsaved object as @object" do
-  #      # Trigger the behavior that occurs when invalid params are submitted
-  #      model.any_instance.stub(:save).and_return(false)
-  #      post :create, {:object => { "name" => "invalid value" }}, valid_session
-  #      assigns(:object).should be_a_new(model)
-  #    end
-  #  end
-  #end
+    describe "when the object does not save" do
+      it "responds with 'unprocessable entity'" do
+        model.any_instance.stub(:save).and_return(false)
+        post :create, {:app => valid_attributes}, valid_session
+        response.status.should be 422
+      end
+    end
+  end
 
   #describe "PUT update" do
   #  describe "with valid params" do
