@@ -1,26 +1,26 @@
 require "spec_helper"
 
-describe Api::TablesController do
+describe Api::V1::TablesController do
   describe "routing" do
 
     it "routes to #index" do
-      get("/api/apps/1/tables").should route_to("api/tables#index", :id => "1")
+      get("/api/v1/apps/1/tables").should route_to("api/v1/tables#index", :id => "1")
     end
 
     it "routes to #create" do
-      post("/api/apps/1/tables").should route_to("api/tables#create", :id => "1")
+      post("/api/v1/apps/1/tables").should route_to("api/v1/tables#create", :id => "1")
     end
 
     it "routes to #show" do
-      get("/api/tables/1").should route_to("api/tables#show", :id => "1")
+      get("/api/v1/tables/1").should route_to("api/v1/tables#show", :id => "1")
     end
 
     it "routes to #update" do
-      put("/api/tables/1").should route_to("api/tables#update", :id => "1")
+      put("/api/v1/tables/1").should route_to("api/v1/tables#update", :id => "1")
     end
 
     it "routes to #destroy" do
-      delete("/api/tables/1").should route_to("api/tables#destroy", :id => "1")
+      delete("/api/v1/tables/1").should route_to("api/v1/tables#destroy", :id => "1")
     end
 
   end
