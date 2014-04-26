@@ -3,27 +3,24 @@ require 'spec_helper'
 describe ObjectsController do
 
   before do
-    class ExampleObjectsController < ObjectsController; end
-    @controller = ExampleObjectsController.new
+    module ExampleModule
+      class ExampleObjectsController < ObjectsController; end
+    end
+    class ExampleObject; end
+    @controller = ExampleModule::ExampleObjectsController.new
   end
 
   describe "#model_name" do
-    it "looks up a data model by naming conventions" do
+    it "looks up a data model name by naming conventions" do
       @controller.model_name.should == 'ExampleObject'
     end
   end
 
-  #let(:example_controller) do
-  #  class ExamplesController < ObjectsController
-  #  end
-  #end
-
-  #before do
-  #  class Example
-  #    include Mongoid::Document
-  #    field :name, type: :string
-  #  end
-  #end
+  describe "#model" do
+    it "looks up a data model by naming conventions" do
+      @controller.model.should == ExampleObject
+    end
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Object. As you add validations to Object, be sure to

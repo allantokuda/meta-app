@@ -2,9 +2,12 @@ class ObjectsController < ApplicationController
   #before_action :lookup, only: [:show, :update, :destroy]
   #before_action :lookup_parent_and_siblings, only: [:nested_index, :create]
 
+  def model
+    model_name.camelcase.constantize
+  end
+
   def model_name
-    self.class.to_s.gsub('Controller','').singularize
-    #self.class.to_s.gsub('Controller','').split('::').last.singularize
+    self.class.to_s.gsub('Controller','').split('::').last.singularize
   end
 
   #def index
@@ -58,10 +61,6 @@ class ObjectsController < ApplicationController
 
   #def object_params
   #  params.require(model_symbol).permit(*permitted_params)
-  #end
-
-  #def model
-  #  model_name.camelcase.constantize
   #end
 
   #def model_symbol
