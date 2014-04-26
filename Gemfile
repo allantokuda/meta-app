@@ -44,7 +44,7 @@ gem 'twitter-bootstrap-rails'
 gem 'angularjs-rails'
 gem 'database_cleaner'
 
-group :development do
+group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'zeus'

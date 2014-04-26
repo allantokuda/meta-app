@@ -1,5 +1,5 @@
 class ObjectsController < ApplicationController
-  #before_action :lookup, only: [:show, :update, :destroy]
+  before_action :lookup, only: [:show, :update, :destroy]
   #before_action :lookup_parent_and_siblings, only: [:nested_index, :create]
 
   def model
@@ -18,18 +18,28 @@ class ObjectsController < ApplicationController
     model_name.underscore.pluralize.to_sym
   end
 
-  #def index
-  #  @objects = model.all
-  #  render json: @objects
-  #end
+  def index
+    @objects = model.all
+    render json: @objects
+  end
 
   #def nested_index
   #  render json: @sibling_objects
   #end
 
-  #def show
-  #  render json: @object
-  #end
+  def show
+    render json: @object
+  end
+
+  def create
+    @object = model.new(object_params)
+
+    #if @object.save
+      render json: @object, status: :created
+    #else
+    #  render json: @object.errors, status: :unprocessable_entity
+    #end
+  end
 
   #def create
   #  @object = model.new(object_params)
@@ -58,9 +68,9 @@ class ObjectsController < ApplicationController
 
   #private
 
-  #def lookup
-  #  @object = model.find(params[:id])
-  #end
+  def lookup
+    @object = model.find(params[:id])
+  end
 
   #def lookup_parent_and_siblings
   #  @parent_object = parent_model.find(params[:id])
