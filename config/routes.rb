@@ -1,11 +1,6 @@
 MetaApp::Application.routes.draw do
   namespace :api do
-    get    'tables'     => 'tables#index'
-    post   'tables'     => 'tables#create'
-    get    'tables/:id' => 'tables#show'
-    put    'tables/:id' => 'tables#update'
-    delete 'tables/:id' => 'tables#destroy'
-
+  namespace :v1 do
     get    'apps' => "apps#index" #sysadmin-only index resource
     post   'apps' => "apps#create"
 
@@ -69,5 +64,6 @@ MetaApp::Application.routes.draw do
     get    'records/:id' => "records#show"
     put    'records/:id' => "records#update"
     delete 'records/:id' => "records#destroy"
+  end
   end
 end
