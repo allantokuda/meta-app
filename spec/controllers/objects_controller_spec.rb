@@ -10,15 +10,21 @@ describe ObjectsController do
     @controller = ExampleModule::ExampleObjectsController.new
   end
 
-  describe "#model_name" do
-    it "looks up a data model name by naming conventions" do
-      @controller.model_name.should == 'ExampleObject'
+  describe '#model' do
+    it 'looks up a data model by naming conventions' do
+      @controller.model.should == ExampleObject
     end
   end
 
-  describe "#model" do
-    it "looks up a data model by naming conventions" do
-      @controller.model.should == ExampleObject
+  describe '#model_symbol' do
+    it 'returns the singular model name as a symbol' do
+      @controller.model_symbol.should == :example_object
+    end
+  end
+
+  describe '#model_symbol_plural' do
+    it 'returns the plural model name as a symbol' do
+      @controller.model_symbol_plural.should == :example_objects
     end
   end
 

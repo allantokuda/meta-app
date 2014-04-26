@@ -10,6 +10,14 @@ class ObjectsController < ApplicationController
     self.class.to_s.gsub('Controller','').split('::').last.singularize
   end
 
+  def model_symbol
+    model_name.underscore.to_sym
+  end
+
+  def model_symbol_plural
+    model_name.underscore.pluralize.to_sym
+  end
+
   #def index
   #  @objects = model.all
   #  render json: @objects
@@ -56,19 +64,11 @@ class ObjectsController < ApplicationController
 
   #def lookup_parent_and_siblings
   #  @parent_object = parent_model.find(params[:id])
-  #  @sibling_objects = @parent_object.public_send(plural_model_symbol)
+  #  @sibling_objects = @parent_object.public_send(model_symbol_plural)
   #end
 
   #def object_params
   #  params.require(model_symbol).permit(*permitted_params)
-  #end
-
-  #def model_symbol
-  #  model_name.underscore.to_sym
-  #end
-
-  #def plural_model_symbol
-  #  model_name.underscore.pluralize.to_sym
   #end
 
   #def permitted_params
