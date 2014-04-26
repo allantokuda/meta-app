@@ -61,12 +61,12 @@ describe Api::V1::AppsController do
     end
   end
 
-  #describe "DELETE destroy" do
-  #  it "destroys the requested object" do
-  #    object = model.create! valid_attributes
-  #    expect {
-  #      delete :destroy, {:id => object.to_param}, valid_session
-  #    }.to change(model, :count).by(-1)
-  #  end
-  #end
+  describe "DELETE destroy" do
+    it "destroys the requested object" do
+      object = model.create! valid_attributes
+      expect {
+        delete :destroy, {:id => object.to_param}, valid_session
+      }.to change(model, :count).by(-1)
+    end
+  end
 end

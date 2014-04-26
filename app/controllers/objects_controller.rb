@@ -61,10 +61,10 @@ class ObjectsController < ApplicationController
     end
   end
 
-  #def destroy
-  #  @object.destroy
-  #  head :no_content
-  #end
+  def destroy
+    @object.destroy
+    head :no_content
+  end
 
   #private
 
