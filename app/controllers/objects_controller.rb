@@ -1,6 +1,6 @@
 class ObjectsController < ApplicationController
-  before_action :lookup, only: [:show, :update, :destroy]
-  #before_action :lookup_parent_and_siblings, only: [:nested_index, :create]
+  before_action :lookup_object, only: [:show, :update, :destroy]
+  before_action :lookup_parent, only: [:index, :create]
 
   def model
     model_name.camelcase.constantize
@@ -18,17 +18,22 @@ class ObjectsController < ApplicationController
     model_name.underscore.pluralize.to_sym
   end
 
-  def index
-    @objects = model.all
-    render json: @objects
+  def parent_model
+    parent_model_name.camelcase.constantize if parent_model_name
   end
 
-  #def nested_index
-  #  render json: @sibling_objects
-  #end
+  def parent_model_name
+    path = request.env['PATH_INFO'].split('/')
+    path[3].singularize if path[3] && path[5]
+  end
 
-  def show
-    render json: @object
+  def index
+    if parent_model
+      objects = @parent.public_send(model_symbol_plural).all
+    else
+      objects = model.all
+    end
+    render json: objects
   end
 
   def create
@@ -53,6 +58,10 @@ class ObjectsController < ApplicationController
   #  end
   #end
 
+  def show
+    render json: @object
+  end
+
   def update
     if @object.update(object_params)
       head :no_content
@@ -68,29 +77,23 @@ class ObjectsController < ApplicationController
 
   private
 
-  def lookup
-    begin
-      @object = model.find(params[:id])
-    rescue Mongoid::Errors::DocumentNotFound => e
-      #head :not_found
-      render json: { errors: "#{model_name} id #{params[:id]} not found" }, status: :not_found
-    end
+  def lookup_object
+    @object = lookup(model)
   end
 
-  #def lookup_parent_and_siblings
-  #  @parent_object = parent_model.find(params[:id])
-  #  @sibling_objects = @parent_object.public_send(model_symbol_plural)
-  #end
+  def lookup_parent
+    @parent = lookup(parent_model) if parent_model
+  end
+
+  def lookup(subject)
+    begin
+      @object = subject.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound => e
+      render json: { errors: "#{subject} id #{params[:id]} not found" }, status: :not_found
+    end
+  end
 
   def object_params
     params.require(model_symbol).permit(*model.non_id_fields)
   end
-
-  #def parent_model
-  #  parent_model_name.camelcase.constantize
-  #end
-
-  #def parent_model_name
-  #  request.env['PATH_INFO'].split('/')[3].singularize
-  #end
 end
