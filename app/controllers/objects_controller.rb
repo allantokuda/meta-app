@@ -27,9 +27,13 @@ class ObjectsController < ApplicationController
     path[3].singularize if path[3] && path[5]
   end
 
+  def siblings
+    @parent.public_send(model_symbol_plural)
+  end
+
   def index
     if parent_model
-      objects = @parent.public_send(model_symbol_plural).all
+      objects = siblings.all
     else
       objects = model.all
     end
@@ -37,26 +41,21 @@ class ObjectsController < ApplicationController
   end
 
   def create
-    @object = model.new(object_params)
+    object = model.new(object_params)
 
-    if @object.save
-      render json: @object, status: :created
+    if parent_model
+      siblings << object
+      topic = @parent
     else
-      render json: @object.errors, status: :unprocessable_entity
+      topic = object
+    end
+
+    if topic.save
+      render json: topic, status: :created
+    else
+      render json: topic.errors, status: :unprocessable_entity
     end
   end
-
-  #def create
-  #  @object = model.new(object_params)
-
-  #  @sibling_objects << @object
-
-  #  if @parent_object.save
-  #    render json: @object, status: :created
-  #  else
-  #    render json: @object.errors, status: :unprocessable_entity
-  #  end
-  #end
 
   def show
     render json: @object

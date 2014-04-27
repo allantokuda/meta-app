@@ -1,5 +1,6 @@
 class Table
   include Mongoid::Document
+  extend DocumentMethods
   field :name, type: String
   embedded_in :app
   embeds_many :columns

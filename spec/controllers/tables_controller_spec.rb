@@ -21,27 +21,21 @@ describe Api::V1::TablesController do
     end
   end
 
-  #describe "GET show" do
-  #  it "responds with the requested object" do
-  #    object = model.create! valid_attributes
-  #    get :show, {:id => object.to_param}, valid_session
-  #    response.body.should match 'My Example'
-  #  end
-  #end
-
-  #describe "POST create" do
-  #  describe "with valid params" do
-  #    it "creates a new object" do
-  #      expect {
-  #        post :create, {:app => valid_attributes}, valid_session
-  #      }.to change(model, :count).by(1)
-  #    end
+  describe "POST create" do
+    describe "with valid params" do
+      it "creates a new object" do
+        parent = parent_model.create name: 'Example Parent'
+        post :create, {id: parent.id, :table => { name: "Example" }}, valid_session
+        response.status.should eq 201
+        parent.reload
+        parent.tables.count.should == 1
+      end
 
   #    it "responds with the newly created object" do
   #      post :create, {:app => valid_attributes}, valid_session
   #      response.body.should match 'My Example'
   #    end
-  #  end
+    end
 
   #  describe "when the object does not save" do
   #    it "responds with 'unprocessable entity'" do
@@ -49,6 +43,14 @@ describe Api::V1::TablesController do
   #      post :create, {:app => valid_attributes}, valid_session
   #      response.status.should be 422
   #    end
+  #  end
+  end
+
+  #describe "GET show" do
+  #  it "responds with the requested object" do
+  #    object = model.create! valid_attributes
+  #    get :show, {:id => object.to_param}, valid_session
+  #    response.body.should match 'My Example'
   #  end
   #end
 
