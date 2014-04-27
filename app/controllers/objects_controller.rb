@@ -66,7 +66,7 @@ class ObjectsController < ApplicationController
     head :no_content
   end
 
-  #private
+  private
 
   def lookup
     @object = model.find(params[:id])
@@ -78,15 +78,8 @@ class ObjectsController < ApplicationController
   #end
 
   def object_params
-    params.require(model_symbol).permit(*permitted_params)
+    params.require(model_symbol).permit(*model.non_id_fields)
   end
-
-  def permitted_params
-    [:name]
-  end
-  #def permitted_params
-  #  model.try(:fields).keys.map(&:to_sym).reject{|k| k == :_id}
-  #end
 
   #def parent_model
   #  parent_model_name.camelcase.constantize
