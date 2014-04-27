@@ -69,7 +69,12 @@ class ObjectsController < ApplicationController
   private
 
   def lookup
-    @object = model.find(params[:id])
+    begin
+      @object = model.find(params[:id])
+    rescue Mongoid::Errors::DocumentNotFound => e
+      #head :not_found
+      render json: { errors: "#{model_name} id #{params[:id]} not found" }, status: :not_found
+    end
   end
 
   #def lookup_parent_and_siblings
