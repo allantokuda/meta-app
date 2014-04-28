@@ -25,25 +25,29 @@ describe Api::V1::TablesController do
     describe "with valid params" do
       it "creates a new object" do
         parent = parent_model.create name: 'Example Parent'
-        post :create, {id: parent.id, :table => { name: "Example" }}, valid_session
+        post :create, {id: parent.id, :table => { name: "Example Object" }}, valid_session
         response.status.should eq 201
+        response.body.should match 'Example Object'
         parent.reload
         parent.tables.count.should == 1
       end
-
-  #    it "responds with the newly created object" do
-  #      post :create, {:app => valid_attributes}, valid_session
-  #      response.body.should match 'My Example'
-  #    end
     end
 
-  #  describe "when the object does not save" do
-  #    it "responds with 'unprocessable entity'" do
-  #      model.any_instance.stub(:save).and_return(false)
-  #      post :create, {:app => valid_attributes}, valid_session
-  #      response.status.should be 422
-  #    end
-  #  end
+    describe "when the parent object is not found" do
+      it "responds with 'not found'" do
+        post :create, {id: 12345, :table => { name: "Example Object" }}, valid_session
+        response.status.should eq 404
+      end
+    end
+
+    describe "when the parent object exists but the object still does not save" do
+      it "responds with 'unprocessable entity'" do
+        parent = parent_model.create name: 'Example Parent'
+        parent_model.any_instance.stub(:save).and_return(false)
+        post :create, {id: parent.id, :table => { name: "Example Object" }}, valid_session
+        response.status.should be 422
+      end
+    end
   end
 
   #describe "GET show" do
