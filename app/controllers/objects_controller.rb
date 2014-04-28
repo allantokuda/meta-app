@@ -51,7 +51,7 @@ class ObjectsController < ApplicationController
     end
 
     if topic.save
-      render json: topic, status: :created
+      render json: object, status: :created
     else
       render json: topic.errors, status: :unprocessable_entity
     end

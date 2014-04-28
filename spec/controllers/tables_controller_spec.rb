@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Api::V1::TablesController do
   let(:parent_model) { App }
   let(:object_model) { Table }
+  let(:model_name  ) { :table }
+  let(:siblings    ) { :tables }
 
   let(:valid_session) { {} }
 
@@ -10,9 +12,11 @@ describe Api::V1::TablesController do
   # so only those within a specific App should be retrieved
   describe "GET index" do
     it "responds with all sibling objects" do
-      parent = parent_model.new name: 'Example Parent'
-      parent.tables << object_model.new( name: 'Example Object 1' )
-      parent.tables << object_model.new( name: 'Example Object 2' )
+      # seems that for a has_many relationship, :create is needed,
+      # otherwise saving the parent does not automatically save the children
+      parent = parent_model.create name: 'Example Parent'
+      parent.send(siblings) << object_model.new( name: 'Example Object 1' )
+      parent.send(siblings) << object_model.new( name: 'Example Object 2' )
       parent.save!
       get :index, {id: parent.id}, valid_session
       response.body.should match 'Example Object 1'
@@ -25,17 +29,17 @@ describe Api::V1::TablesController do
     describe "with valid params" do
       it "creates a new object" do
         parent = parent_model.create name: 'Example Parent'
-        post :create, {id: parent.id, :table => { name: "Example Object" }}, valid_session
+        post :create, {id: parent.id, model_name => { name: "Example Object" }}, valid_session
         response.status.should eq 201
         response.body.should match 'Example Object'
         parent.reload
-        parent.tables.count.should == 1
+        parent.send(siblings).count.should == 1
       end
     end
 
     describe "when the parent object is not found" do
       it "responds with 'not found'" do
-        post :create, {id: 12345, :table => { name: "Example Object" }}, valid_session
+        post :create, {id: 12345, model_name => { name: "Example Object" }}, valid_session
         response.status.should eq 404
       end
     end
@@ -44,19 +48,28 @@ describe Api::V1::TablesController do
       it "responds with 'unprocessable entity'" do
         parent = parent_model.create name: 'Example Parent'
         parent_model.any_instance.stub(:save).and_return(false)
-        post :create, {id: parent.id, :table => { name: "Example Object" }}, valid_session
+        post :create, {id: parent.id, model_name => { name: "Example Object" }}, valid_session
         response.status.should be 422
       end
     end
   end
 
-  #describe "GET show" do
-  #  it "responds with the requested object" do
-  #    object = model.create! valid_attributes
-  #    get :show, {:id => object.to_param}, valid_session
-  #    response.body.should match 'My Example'
-  #  end
-  #end
+  describe "GET show" do
+    context "when the object and its parent exist" do
+      let(:object) { object_model.new    name: 'Example Object' }
+      let(:parent) { parent_model.create name: 'Example Parent' }
+
+      before do
+        parent.send(siblings) << object
+        parent.save
+      end
+
+      it "responds with the requested object" do
+        get :show, {:id => object.to_param}, valid_session
+        response.body.should match 'Example Object'
+      end
+    end
+  end
 
   #describe "PUT update" do
   #  describe "with valid params" do
