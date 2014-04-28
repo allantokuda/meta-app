@@ -71,19 +71,15 @@ describe Api::V1::TablesController do
     end
   end
 
-  #describe "PUT update" do
-  #  describe "with valid params" do
-  #    it "updates the requested object" do
-  #      object = model.create! valid_attributes
-  #      # Assuming there are no other objects in the database, this
-  #      # specifies that the model created on the previous line
-  #      # receives the :update_attributes message with whatever params are
-  #      # submitted in the request.
-  #      model.any_instance.should_receive(:update).with({ "name" => "MyString" })
-  #      put :update, {:id => object.to_param, :app => { "name" => "MyString" }}, valid_session
-  #    end
-  #  end
-  #end
+  describe "PUT update" do
+    describe "with valid params" do
+      it "updates the requested object" do
+        object = object_model.create! name: 'Example Object'
+        object_model.any_instance.should_receive(:update).with({ "name" => "Example Rename" })
+        put :update, {:id => object.to_param, model_name => { "name" => "Example Rename" }}, valid_session
+      end
+    end
+  end
 
   describe "DELETE destroy" do
     it "destroys the requested object" do
