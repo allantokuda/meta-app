@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe Api::V1::AppsController do
   let(:model) { App }
+  let(:child_model) { Table }
+  let(:children) { :tables }
 
   let(:valid_attributes) { { "name" => "My Example" } }
   let(:valid_session) { {} }
@@ -68,5 +70,22 @@ describe Api::V1::AppsController do
         delete :destroy, {:id => object.to_param}, valid_session
       }.to change(model, :count).by(-1)
     end
+
+    it "destroys dependent objects" do
+      object = model.create valid_attributes
+      child  = child_model.new name: 'Example Child'
+
+      object.send(children) << child
+      object.save
+
+      init_object_count =       model.count
+      init_child_count  = child_model.count
+
+      delete :destroy, {:id => object.to_param}, valid_session
+
+      model      .count.should == init_object_count - 1
+      child_model.count.should == init_child_count  - 1
+    end
+
   end
 end

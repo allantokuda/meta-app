@@ -85,12 +85,12 @@ describe Api::V1::TablesController do
   #  end
   #end
 
-  #describe "DELETE destroy" do
-  #  it "destroys the requested object" do
-  #    object = model.create! valid_attributes
-  #    expect {
-  #      delete :destroy, {:id => object.to_param}, valid_session
-  #    }.to change(model, :count).by(-1)
-  #  end
-  #end
+  describe "DELETE destroy" do
+    it "destroys the requested object" do
+      object = object_model.create! name: 'Example Object'
+      expect {
+        delete :destroy, {:id => object.to_param}, valid_session
+      }.to change(object_model, :count).by(-1)
+    end
+  end
 end
