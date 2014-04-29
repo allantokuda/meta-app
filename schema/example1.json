@@ -8,12 +8,12 @@
     },
     "entity": {
       "name": "string",
-      "_embeds_many": ["attribute", "record", "view"],
+      "_embeds_many": ["field", "record", "view"],
       "_has_many": ["relationship"]
     },
-    "attribute": {
+    "field": {
       "name": "string",
-      "type": "integer"
+      "type": "string"
     },
     "record": {
     },

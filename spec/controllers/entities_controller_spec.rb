@@ -25,12 +25,26 @@ describe Api::V1::EntitiesController do
   end
 
   describe "POST create" do
+    def create_within(parent)
+      post :create, {
+        :id => parent.id, 
+        model_name => { 
+          name: "Example Object",
+          data_fields: [
+            { name: 'Name', type: 'string' },
+            { name: 'Age', type: 'integer' }
+          ]
+        }
+      }, valid_session
+    end
+
     describe "with valid params" do
       it "creates a new object" do
         parent = parent_model.create name: 'Example Parent'
-        post :create, {id: parent.id, model_name => { name: "Example Object" }}, valid_session
+        create_within(parent)
         response.status.should eq 201
         response.body.should match 'Example Object'
+        response.body.should match '"name":"Age","type":"integer"'
         parent.reload
         parent.send(siblings).count.should == 1
       end
