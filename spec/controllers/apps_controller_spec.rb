@@ -2,8 +2,8 @@ require 'spec_helper'
 
 describe Api::V1::AppsController do
   let(:model) { App }
-  let(:child_model) { Table }
-  let(:children) { :tables }
+  let(:child_model) { Entity }
+  let(:children) { :entities }
 
   let(:valid_attributes) { { "name" => "My Example" } }
   let(:valid_session) { {} }

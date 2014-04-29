@@ -9,8 +9,8 @@ class View
   field :index_style,      type: String
   field :detail_style,     type: String
   field :default_order,    type: String
-  embedded_in :table
-  embedded_in :view
-  embeds_many :views
+  belongs_to :entity
+  belongs_to :view
+  has_many :views
   has_many :permissions
 end

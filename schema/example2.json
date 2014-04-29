@@ -1,7 +1,7 @@
 {
   "name": "First Pro Services Inc",
   "roles": ["manager", "technician"],
-  "tables": {
+  "entities": {
     "work_order": {
       "order_id": "integer",
       "due_date": "date",

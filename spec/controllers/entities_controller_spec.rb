@@ -1,15 +1,14 @@
 require 'spec_helper'
 
-describe Api::V1::TablesController do
+describe Api::V1::EntitiesController do
   let(:parent_model) { App }
-  let(:object_model) { Table }
-  let(:model_name  ) { :table }
-  let(:siblings    ) { :tables }
+  let(:object_model) { Entity }
+  let(:model_name  ) { :entity }
+  let(:siblings    ) { :entities }
 
   let(:valid_session) { {} }
 
-  # Table is a nested object within App
-  # so only those within a specific App should be retrieved
+  # This is a nested object so only those within a specific parent object should be retrieved
   describe "GET index" do
     it "responds with all sibling objects" do
       # seems that for a has_many relationship, :create is needed,

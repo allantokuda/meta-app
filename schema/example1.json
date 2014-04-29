@@ -4,9 +4,9 @@
   "entities": {
     "app": {
       "name": "string",
-      "_embeds_many": ["table", "role", "subscription"]
+      "_embeds_many": ["entity", "role", "subscription"]
     },
-    "table": {
+    "entity": {
       "name": "string",
       "_embeds_many": ["attribute", "record", "view"],
       "_has_many": ["relationship"]
