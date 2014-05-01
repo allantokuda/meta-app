@@ -1,4 +1,6 @@
 MetaApp::Application.routes.draw do
+  root 'sites#main'
+
   namespace :api do
   namespace :v1 do
     get    'apps' => "apps#index" #sysadmin-only index resource
