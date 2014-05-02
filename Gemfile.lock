@@ -203,6 +203,7 @@ DEPENDENCIES
   guard
   guard-rspec
   jbuilder (~> 1.2)
+  jquery-rails
   mongoid!
   pry
   rails (= 4.0.1)

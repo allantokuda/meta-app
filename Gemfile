@@ -36,6 +36,7 @@ end
 gem 'mongoid', git: 'https://github.com/mongoid/mongoid.git'
 gem 'twitter-bootstrap-rails'
 gem 'database_cleaner'
+gem 'jquery-rails'
 gem 'ember-rails'
 gem 'ember-source', '1.5.0'
 

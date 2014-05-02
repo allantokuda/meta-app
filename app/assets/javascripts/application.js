@@ -11,9 +11,13 @@
 // about supported directives.
 //
 //= require handlebars
+//= require jquery
+//= require jquery_ujs
 //= require ember
 //= require ember-data
 //= require_self
+//= require router
+//= require_tree .
 
-MetaApp = Ember.Application.create({
+window.MetaApp = Ember.Application.create({
 });

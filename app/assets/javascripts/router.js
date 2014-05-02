@@ -1,3 +1,6 @@
 MetaApp.Router.map(function() {
-  this.resource('meta_app', { path: '/' });
+  LOG_TRANSITIONS: true;
+  this.resource('records', function() {
+    this.route('foo');
+  });
 });

@@ -22,3 +22,7 @@
 tags
 
 vendor
+/public/javascripts
+
+# symlink to app/assets/javascripts
+/js
